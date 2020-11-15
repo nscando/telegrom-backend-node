@@ -1,6 +1,4 @@
-const { error } = require("../../network/response");
-
-
+const store = require('./store');
 
 function addMessage(user, message) {
      return new Promise((resolve, reject) => {
@@ -13,12 +11,19 @@ function addMessage(user, message) {
                message: message,
                date: new Date(),
           };
-          console.log(fullMessage);
+          store.add(fullMessage);
           resolve(fullMessage);
      });
 
 };
 
+function getMessages() {
+     return new Promise((resolve, reject) => {
+          resolve(store.list());
+     })
+}
+
 module.exports = {
-     addMessage
+     addMessage,
+     getMessages
 };
