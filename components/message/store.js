@@ -1,14 +1,4 @@
-const db = require('mongoose');
 const Model = require('./model')
-
-// mongodb+srv://db_telegrom:tH7PPwKskvZI5sSC@cluster0.pp3cm.mongodb.net/test
-db.Promise = global.Promise;
-
-db.connect('mongodb+srv://db_telegrom:tH7PPwKskvZI5sSC@cluster0.pp3cm.mongodb.net/test', {
-     useNewUrlParser: true,
-     useUnifiedTopology: true
-});
-console.log('[db] Conectado con éxito');
 
 function addMessage(message) {
      // list.push(message);
@@ -34,7 +24,8 @@ async function updateMessage(id, message) {
 };
 
 function removeMessage(id) {
-     return Model.deleteOne({ _id: id });
+     const delMessage = Model.deleteOne({ _id: id });
+     return delMessage;
 }
 
 module.exports = {
