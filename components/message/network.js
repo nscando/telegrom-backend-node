@@ -39,10 +39,15 @@ router.patch("/:id", function (req, res) {
      //res.send("ok");
 });
 
-router.delete('/', function (req, res) {
-     console.log(req.query);
-     console.log(req.body);
-     response.success(req, res, 'Mensaje eliminado correctamente!', 201);
+router.delete('/:id', function (req, res) {
+     controller.deleteMessage(req.params.id)
+          .then(() => {
+               response.success(req, res, `Usuario ${req.params.id} eliminado`, 200)
+          })
+          .catch(e => {
+               response.error(req, res, 'Error interno', 500, e)
+          });
+
 });
 
 
