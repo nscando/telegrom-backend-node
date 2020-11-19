@@ -12,6 +12,12 @@ function addUser(name) {
 };
 
 
+function getUsers() {
+     return (store.list());
+};
+
+
 module.exports = {
      addUser,
+     getUsers
 };

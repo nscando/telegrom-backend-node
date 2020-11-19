@@ -6,13 +6,22 @@ function addMessage(message) {
      myMessage.save();
 };
 
-async function getMessages(filterUser) {
-     let filter = {};
-     if (filterUser !== null) {
-          filter = { user: new RegExp(`^${filterUser}$`, 'i') }
-     }
-     const messages = await Model.find(filter);
-     return messages;
+function getMessages(filterUser) {
+     return new Promise((resolve, reject) => {
+          let filter = {};
+          if (filterUser !== null) {
+               filter = { user: new RegExp(`^${filterUser}$`, 'i') }
+          }
+          const messages = Model.find(filter)
+               .populate('user')
+               .exec((error, populated) => {
+                    if (error) {
+                         reject(error);
+                         return false;
+                    }
+                    resolve(populated);
+               })
+     });
 };
 
 async function updateMessage(id, message) {
