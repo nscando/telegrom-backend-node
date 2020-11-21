@@ -1,4 +1,4 @@
-const Model = require('./model')
+const Model = require('./model');
 
 function addMessage(message) {
      // list.push(message);
@@ -6,23 +6,24 @@ function addMessage(message) {
      myMessage.save();
 };
 
-function getMessages(filterUser) {
+async function getMessages(filterChat) {
      return new Promise((resolve, reject) => {
           let filter = {};
-          if (filterUser !== null) {
-               filter = { user: new RegExp(`^${filterUser}$`, 'i') }
+          if (filterChat !== null) {
+               filter = { chat: filterChat };
           }
-          const messages = Model.find(filter)
+          Model.find(filter)
                .populate('user')
                .exec((error, populated) => {
                     if (error) {
                          reject(error);
                          return false;
                     }
+
                     resolve(populated);
-               })
-     });
-};
+               });
+     })
+}
 
 async function updateMessage(id, message) {
      const foundMessage = await Model.findOne({ _id: id });

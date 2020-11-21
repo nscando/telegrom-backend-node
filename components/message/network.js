@@ -5,19 +5,19 @@ const router = express.Router();
 
 
 router.get('/', function (req, res) {
-     const filterMessages = req.query.user || null;
+     const filterMessages = req.query.chat || null;
      controller.getMessages(filterMessages)
           .then((messageList) => {
-               response.success(req, res, messageList, 200)
+               response.success(req, res, messageList, 200);
           })
           .catch(e => {
-               response.error(req, res, 'Unexpected Error', 500, e)
-          });
+               response.error(req, res, 'Unexpected Error', 500, e);
+          })
 });
 
 router.post('/', function (req, res) {
      console.log(req.query);
-     controller.addMessage(req.body.user, req.body.message)
+     controller.addMessage(req.body.chat, req.body.user, req.body.message)
           .then((fullMessage) => {
                response.success(req, res, fullMessage, 201);
           })
